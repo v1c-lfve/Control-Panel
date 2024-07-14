@@ -1,0 +1,224 @@
+<html><head><base href="https://linkhub.me"><title>Control Panel - La Salle Lille</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+  :root {
+    --primary-color: #6C63FF;
+    --secondary-color: #F5F5F5;
+    --text-color: #333;
+    --hover-color: #5A52D5;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  header {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 60px 0;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+
+  header::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+    transform: rotate(30deg);
+    z-index: 1;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 3em;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+  }
+
+  header p {
+    font-size: 1em;
+    margin-top: 10px;
+    position: relative;
+    z-index: 2;
+    opacity: 0.8;
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .link-item {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .link-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 50, 255, 0.25);
+  }
+
+  .link-item a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+    display: block;
+  }
+
+  .link-item a:hover {
+    color: var(--primary-color);
+  }
+
+  .add-link {
+    display: block;
+    text-align: center;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 40px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+
+  .add-link:hover {
+    background-color: var(--hover-color);
+  }
+  .pomodoro {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+.timer {
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+.controls button {
+    background-color: #4a00e0;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Control Panel</h1>
+    <p>La Salle Lille</p>
+  </header>
+  
+  <div class="container">
+    <div class="links-grid">
+      <div class="link-item">
+        <a href="https://www.ecoledirecte.com"target="_blank">École Directe</a>
+      </div>
+      <div class="link-item">
+        <a href="https://www.deepl.com"target="_blank">DeepL</a>
+      </div>
+      <div class="link-item">
+        <a href="https://onedrive.live.com"target="_blank">OneDrive</a>
+      </div>
+      <div class="link-item">
+        <a href="https://www.youtube.com"target="_blank">YouTube</a>
+      </div>
+      <div class="link-item">
+        <a href="https://chat.openai.com"target="_blank">ChatGPT</a>
+      </div>
+      <div class="link-item">
+        <a href="https://copilot.microsoft.com"target="_blank">Copilot</a>
+      </div>
+	  <div class="link-item">
+        <a href="https://websim.ai/"target="_blank">Websim</a>
+      </div>
+	  <div class="link-item">
+        <a href="https://view.genially.com/648c0e4fe99c850011cbbe71/interactive-content-classes-virtuelles"target="_blank">Physic & chemistery</a>
+      </div>
+	  <div class="link-item">
+        <a href="https://web.snapchat.com/"target="_blank">Snapchat</a>
+      </div>
+    </div>
+    
+    <div class="pomodoro">
+        <h2>Timer ⌚</h2>
+        <div class="timer" id="timer">25:00</div>
+        <div class="controls">
+            <button onclick="startTimer()">Start</button>
+            <button onclick="pauseTimer()">Pause</button>
+            <button onclick="resetTimer()">Reset</button>
+        </div>
+    </div>
+    
+  </div>
+  <script>
+let timer;
+let timeLeft = 2700; // 25 minutes in seconds
+
+function updateTimer() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timer').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function startTimer() {
+    if (!timer) {
+        timer = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                updateTimer();
+            } else {
+                clearInterval(timer);
+                alert('Pomodoro finished!');
+            }
+        }, 1000);
+    }
+}
+
+function pauseTimer() {
+    clearInterval(timer);
+    timer = null;
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    timer = null;
+    timeLeft = 2700;
+    updateTimer();
+}
+
+updateTimer();
+</script>
+</body>
+</html>
