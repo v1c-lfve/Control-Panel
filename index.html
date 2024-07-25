@@ -116,13 +116,13 @@
     padding: 1rem;
     margin-top: 2rem;
     text-align: center;
-}
-.timer {
+  }
+  .timer {
     font-size: 3rem;
     font-weight: bold;
     margin: 1rem 0;
-}
-.controls button {
+  }
+  .controls button {
     background-color: #4a00e0;
     color: white;
     border: none;
@@ -130,10 +130,71 @@
     margin: 0 0.5rem;
     border-radius: 4px;
     cursor: pointer;
-}
+  }
+
+  /* Mac OS style banner */
+  .mac-banner {
+    background: linear-gradient(to bottom, #f2f2f2, #e6e6e6);
+    border-bottom: 1px solid #d1d1d1;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mac-buttons {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .mac-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .mac-close {
+    background-color: #ff5f56;
+  }
+
+  .mac-minimize {
+    background-color: #ffbd2e;
+  }
+
+  .mac-maximize {
+    background-color: #27c93f;
+  }
+
+  .mac-title {
+    font-size: 14px;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .date-time-separator {
+    margin: 0 15px;
+    font-weight: bold;
+  }
 </style>
 </head>
 <body>
+  <div class="mac-banner">
+    <div class="mac-buttons">
+      <div class="mac-button mac-close"></div>
+      <div class="mac-button mac-minimize"></div>
+      <div class="mac-button mac-maximize"></div>
+    </div>
+    <div class="mac-title">
+      <span id="date"></span>
+      <span class="date-time-separator">|</span>
+      <span id="time"></span>
+    </div>
+  </div>
+
   <header>
     <h1>Control Panel</h1>
     <p>La Salle Lille</p>
@@ -142,40 +203,40 @@
   <div class="container">
     <div class="links-grid">
       <div class="link-item">
-        <a href="https://www.ecoledirecte.com"target="_blank">École Directe</a>
+        <a href="https://www.ecoledirecte.com" target="_blank">École Directe</a>
       </div>
       <div class="link-item">
-        <a href="https://www.deepl.com"target="_blank">DeepL</a>
+        <a href="https://www.deepl.com" target="_blank">DeepL</a>
       </div>
       <div class="link-item">
-        <a href="https://onedrive.live.com"target="_blank">OneDrive</a>
+        <a href="https://onedrive.live.com" target="_blank">OneDrive</a>
       </div>
       <div class="link-item">
-        <a href="https://www.youtube.com"target="_blank">YouTube</a>
+        <a href="https://www.youtube.com" target="_blank">YouTube</a>
       </div>
       <div class="link-item">
-        <a href="https://chat.openai.com"target="_blank">ChatGPT</a>
+        <a href="https://chat.openai.com" target="_blank">ChatGPT</a>
       </div>
       <div class="link-item">
-        <a href="https://copilot.microsoft.com"target="_blank">Copilot</a>
+        <a href="https://copilot.microsoft.com" target="_blank">Copilot</a>
       </div>
-	  <div class="link-item">
-        <a href="https://websim.ai/"target="_blank">Websim</a>
+      <div class="link-item">
+        <a href="https://websim.ai/" target="_blank">Websim</a>
       </div>
-	  <div class="link-item">
-        <a href="https://view.genially.com/648c0e4fe99c850011cbbe71/interactive-content-classes-virtuelles"target="_blank">Physic & chemistery</a>
+      <div class="link-item">
+        <a href="https://view.genially.com/648c0e4fe99c850011cbbe71/interactive-content-classes-virtuelles" target="_blank">Physics & Chemistry</a>
       </div>
-	  <div class="link-item">
-        <a href="https://web.snapchat.com/"target="_blank">Snapchat</a>
+      <div class="link-item">
+        <a href="https://web.snapchat.com/" target="_blank">Snapchat</a>
       </div>
-	<div class="link-item">
-        <a href="https://github.com/"target="_blank">Github</a>
+      <div class="link-item">
+        <a href="https://github.com/" target="_blank">Github</a>
       </div>
-	<div class="link-item">
-        <a href="https://www.online-convert.com/fr"target="_blank">online convert</a>
+      <div class="link-item">
+        <a href="https://www.online-convert.com/fr" target="_blank">Online Convert</a>
       </div>
-	<div class="link-item">
-        <a href="https://mail.google.com/mail/u/2/#inbox"target="_blank">Mail</a>
+      <div class="link-item">
+        <a href="https://mail.google.com/mail/u/2/#inbox" target="_blank">Mail</a>
       </div>
     </div>
     
@@ -228,6 +289,33 @@ function resetTimer() {
 }
 
 updateTimer();
+
+// Function to update date and time
+function updateDateTime() {
+    const now = new Date();
+    const dateOptions = { 
+        weekday: 'long', 
+        month: 'long', 
+        day: 'numeric'
+    };
+    const timeOptions = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+        timeZone: 'Europe/Paris'
+    };
+    const dateFormatter = new Intl.DateTimeFormat('fr-FR', dateOptions);
+    const timeFormatter = new Intl.DateTimeFormat('fr-FR', timeOptions);
+    
+    document.getElementById('date').textContent = dateFormatter.format(now);
+    document.getElementById('time').textContent = timeFormatter.format(now);
+}
+
+// Update date and time every minute
+setInterval(updateDateTime, 60000);
+
+// Initial call to display date and time immediately
+updateDateTime();
 </script>
 </body>
 </html>
